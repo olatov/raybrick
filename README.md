@@ -2,7 +2,8 @@
 A simple Breakout-style game built with Free Pascal and Raylib (via [ray4laz](https://github.com/GuvaCode/ray4laz)).
 
 ## Running
-Find pre-built binaries for Windows and Linux in `bin/` directory. If these do not suit your system, proceed to building from source.
+Find the pre-built executables for Windows and Linux in `bin/` directory. Good practice would be first to verify them by uploading to https://www.virustotal.com/ use other antivirus service, to ensure this is not not some kind of malware.
+If the pre-built executables do not suit your system (or you don't like taking risks running them), proceed to building from source.
 
 ## Building from Source
 
