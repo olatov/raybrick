@@ -76,8 +76,11 @@ begin
   SettingsFile := TIniFile.Create(AFilename);
   try
     SettingsFile.WriteBool('window', 'fullscreen', Fullscreen);
-    SettingsFile.WriteInteger('window', 'width', WindowWidth);
-    SettingsFile.WriteInteger('window', 'height', WindowHeight);
+    if not Fullscreen then
+    begin
+      SettingsFile.WriteInteger('window', 'width', WindowWidth);
+      SettingsFile.WriteInteger('window', 'height', WindowHeight);
+    end;
     SettingsFile.WriteBool('window', 'hi_dpi', HiDPI);
     SettingsFile.WriteInteger('window', 'target_fps', TargetFPS);
     SettingsFile.WriteBool('window', 'vsync', VSync);
