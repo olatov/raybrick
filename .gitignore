@@ -1,0 +1,12 @@
+*.bak
+*.o
+*.ppu
+*.exe
+*.dll
+*.lps
+*.res
+*.rc
+*.or
+src/raybrick
+src/lib/
+backup/

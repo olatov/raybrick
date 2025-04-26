@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <General>
+      <Flags>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+        <MainUnitHasScaledStatement Value="False"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <Title Value="raybrick"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+      <Resources Count="23">
+        <Resource_0 FileName="assets/background/title.jpg" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-TITLE"/>
+        <Resource_1 FileName="assets/background/2.jpg" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-2"/>
+        <Resource_2 FileName="assets/background/3.jpg" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-3"/>
+        <Resource_3 FileName="assets/background/1.jpg" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-1"/>
+        <Resource_4 FileName="assets/sprite/ball.png" Type="RCDATA" ResourceName="IMAGE-BALL"/>
+        <Resource_5 FileName="assets/sprite/brick.png" Type="RCDATA" ResourceName="IMAGE-BRICK"/>
+        <Resource_6 FileName="assets/sprite/paddle.png" Type="RCDATA" ResourceName="IMAGE-PADDLE"/>
+        <Resource_7 FileName="assets/audio/brick-bounce.ogg" Type="RCDATA" ResourceName="SOUND-BRICK-BOUNCE"/>
+        <Resource_8 FileName="assets/audio/game-over.ogg" Type="RCDATA" ResourceName="SOUND-GAME-OVER"/>
+        <Resource_9 FileName="assets/audio/gun-shoot.ogg" Type="RCDATA" ResourceName="SOUND-GUN-SHOOT"/>
+        <Resource_10 FileName="assets/audio/level-up.ogg" Type="RCDATA" ResourceName="SOUND-LEVEL-UP"/>
+        <Resource_11 FileName="assets/audio/paddle-bounce.ogg" Type="RCDATA" ResourceName="SOUND-PADDLE-BOUNCE"/>
+        <Resource_12 FileName="assets/audio/ball-lose.ogg" Type="RCDATA" ResourceName="SOUND-PADDLE-LOSE"/>
+        <Resource_13 FileName="assets/audio/music.ogg" Type="RCDATA" ResourceName="MUSIC"/>
+        <Resource_14 FileName="assets/audio/wall-bounce.ogg" Type="RCDATA" ResourceName="SOUND-WALL-BOUNCE"/>
+        <Resource_15 FileName="assets/audio/bonus-collect.ogg" Type="RCDATA" ResourceName="SOUND-BONUS-COLLECT"/>
+        <Resource_16 FileName="assets/background/4.jpg" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-4"/>
+        <Resource_17 FileName="assets/background/5.jpg" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-5"/>
+        <Resource_18 FileName="assets/audio/ball-extra.ogg" Type="RCDATA" ResourceName="SOUND-BALL-EXTRA"/>
+        <Resource_19 FileName="assets/audio/bonus-shot.ogg" Type="RCDATA" ResourceName="SOUND-BONUS-SHOT"/>
+        <Resource_20 FileName="assets/audio/brick-shot.ogg" Type="RCDATA" ResourceName="SOUND-BRICK-SHOT"/>
+        <Resource_21 FileName="assets/font/ARCADE_I.TTF" Type="RCDATA" ResourceName="FONT-ARCADE-I"/>
+        <Resource_22 FileName="assets/font/ARCADE_R.TTF" Type="RCDATA" ResourceName="FONT-ARCADE-R"/>
+      </Resources>
+    </General>
+    <BuildModes>
+      <Item Name="Default" Default="True"/>
+      <Item Name="Debug">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <Target>
+            <Filename Value="raybrick"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <IncludeAssertionCode Value="True"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+            <VerifyObjMethodCallValidity Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf3"/>
+              <UseHeaptrc Value="True"/>
+              <TrashVariables Value="True"/>
+            </Debugging>
+          </Linking>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <Target>
+            <Filename Value="raybrick"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <RunWithoutDebug Value="True"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+          </Linking>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Win32">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <Target>
+            <Filename Value="raybrick"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <RunWithoutDebug Value="True"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+          </Linking>
+        </CompilerOptions>
+      </Item>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+    <RunParams>
+      <FormatVersion Value="2"/>
+    </RunParams>
+    <RequiredPackages>
+      <Item>
+        <PackageName Value="ray4laz"/>
+      </Item>
+    </RequiredPackages>
+    <Units>
+      <Unit>
+        <Filename Value="raybrick.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Raybrick"/>
+      </Unit>
+      <Unit>
+        <Filename Value="gamerenderer.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="GameRenderer"/>
+      </Unit>
+      <Unit>
+        <Filename Value="gamesettings.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="GameSettings"/>
+      </Unit>
+      <Unit>
+        <Filename Value="gamescenes.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="GameScenes"/>
+      </Unit>
+      <Unit>
+        <Filename Value="gameutils.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="GameUtils"/>
+      </Unit>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <Target>
+      <Filename Value="raybrick"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
+      </Debugging>
+    </Linking>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions>
+      <Item>
+        <Name Value="EAbort"/>
+      </Item>
+      <Item>
+        <Name Value="ECodetoolError"/>
+      </Item>
+      <Item>
+        <Name Value="EFOpenError"/>
+      </Item>
+    </Exceptions>
+  </Debugging>
+</CONFIG>
