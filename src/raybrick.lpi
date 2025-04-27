@@ -12,6 +12,7 @@
       <Title Value="raybrick"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
+      <Icon Value="0"/>
       <Resources Count="23">
         <Resource_0 FileName="assets/background/title.jpg" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-TITLE"/>
         <Resource_1 FileName="assets/background/2.jpg" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-2"/>
