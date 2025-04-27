@@ -30,8 +30,8 @@ program Raybrick;
 
 uses
   Classes, SysUtils, CustApp,
-  RayLib,
-  GameModels, GameSettings, GameScenes, GameUtils;
+  RayLib, RayMath,
+  GameModels, GameSettings, GameScenes, GameUtils, GameRenderer;
 
 type
   { TRayApplication }
@@ -52,6 +52,55 @@ const
 { TRayApplication }
 
 constructor TRayApplication.Create(TheOwner: TComponent);
+  function MeasureFPS(ADuration: Single = 1): Integer;
+  var
+    Start, Current, Finish: UInt64;
+    Rectangle: TRectangle;
+    FullWidth: Single;
+  begin
+    FullWidth := View.width * 0.5;
+    Rectangle.width := FullWidth;
+    Rectangle.height := View.height * 1/32;
+    Rectangle.x := (View.width - Rectangle.width) / 2;
+    Rectangle.y := (View.height - Rectangle.height) / 2;
+
+    Start := GetTickCount64;
+    Finish := GetTickCount64 + Trunc(ADuration * 1000);
+    Current := Start;
+
+    while (Current <= Finish) do
+    begin
+      BeginTextureMode(Target);
+        ClearBackground(ColorCreate(0, 0, 32, 255));
+        Rectangle.width := FullWidth;
+        DrawRectangleLinesEx(Rectangle, 1, GRAY);
+        Rectangle.width := Remap(Current, Start, Finish, 0, FullWidth);
+        DrawRectangleRec(Rectangle, VIOLET);
+        Result := GetFPS;
+      EndTextureMode;
+      TRenderer.RenderTarget(Target);
+      Current := GetTickCount64;
+    end;
+  end;
+
+  procedure ConfigureFPS;
+  var
+    FPS: Integer;
+  begin
+    if Settings.TargetFPS > 0 then
+      SetTargetFPS(Settings.TargetFPS)
+    else if Settings.TargetFPS = 0 then
+    begin
+      FPS := MeasureFPS;
+      case FPS of
+        30, 60, 90, 100, 144, 240:
+          SetTargetFPS(FPS);
+        else
+          SetTargetFPS(60);
+      end;
+    end;
+  end;
+
 begin
   inherited Create(TheOwner);
 
@@ -62,12 +111,13 @@ begin
   if Settings.HiDPI then SetConfigFlags(FLAG_WINDOW_HIGHDPI);
 
   InitWindow(Settings.WindowWidth, Settings.WindowHeight, 'raybrick');
-  if Settings.Fullscreen then ApplyFullscreen(Settings.Fullscreen);
-
-  if Settings.TargetFPS > 0 then SetTargetFPS(Settings.TargetFPS);
 
   Target := LoadRenderTexture(Round(View.Width), Round(View.Height));
   SetTextureFilter(Target.texture, TEXTURE_FILTER_BILINEAR);
+
+  ConfigureFPS;
+
+  if Settings.Fullscreen then ApplyFullscreen(Settings.Fullscreen);
 
   InitAudioDevice;
 end;

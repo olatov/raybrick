@@ -60,7 +60,7 @@ begin
     WindowHeight := SettingsFile.ReadInteger(
       'window', 'height', Round(View.Height));
     HiDPI := SettingsFile.ReadBool('window', 'hi_dpi', False);
-    TargetFPS := SettingsFile.ReadInteger('window', 'target_fps', 144);
+    TargetFPS := SettingsFile.ReadInteger('window', 'target_fps', 0);
     VSync := SettingsFile.ReadBool('window', 'vsync', True);
     ShowFPS := SettingsFile.ReadBool('window', 'show_fps', False);
     Muted := SettingsFile.ReadBool('audio', 'muted', False);
