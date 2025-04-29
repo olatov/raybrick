@@ -1,6 +1,8 @@
 # RayBrick
 A simple Breakout-style game built with Free Pascal and Raylib (via [ray4laz](https://github.com/GuvaCode/ray4laz)).
 
+![image](https://github.com/user-attachments/assets/b86f21a3-9147-41a2-8087-12bc601f2de0)
+
 ## Running
 Download the pre-built executables for Windows, Linux, or macOS from Github Releases page https://github.com/olatov/raybrick/releases.
 
