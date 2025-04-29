@@ -2,7 +2,15 @@
 A simple Breakout-style game built with Free Pascal and Raylib (via [ray4laz](https://github.com/GuvaCode/ray4laz)).
 
 ## Running
-Download the pre-built executables for Windows or Linux from Github Releases page https://github.com/olatov/raybrick/releases.
+Download the pre-built executables for Windows, Linux, or macOS from Github Releases page https://github.com/olatov/raybrick/releases.
+
+Notes:
+- The Windows version will likely trigger a UAC alert, you'll need to confirm to proceed.
+- Similarly, the macOS version hasn't been notarized by Apple, so will be blocked by default by modern versions of the OS. You'll need to let it out of the quarantine before it can run:
+```sh
+xattr -dr com.apple.quarantine raybrick.app
+```
+
 If the pre-built executables do not suit your system (or you don't like taking risks running them), proceed to building from source.
 
 ## Building from Source
