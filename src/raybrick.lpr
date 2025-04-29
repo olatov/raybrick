@@ -68,8 +68,7 @@ constructor TRayApplication.Create(TheOwner: TComponent);
     Finish := GetTickCount64 + Trunc(ADuration * 1000);
     Current := Start;
 
-    while (Current <= Finish) do
-    begin
+    repeat
       BeginTextureMode(Target);
         ClearBackground(ColorCreate(0, 0, 32, 255));
         Rectangle.width := FullWidth;
@@ -80,7 +79,7 @@ constructor TRayApplication.Create(TheOwner: TComponent);
       EndTextureMode;
       TRenderer.RenderTarget(Target);
       Current := GetTickCount64;
-    end;
+    until Current >= Finish;
   end;
 
   procedure ConfigureFPS;

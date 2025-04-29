@@ -2,7 +2,7 @@
 A simple Breakout-style game built with Free Pascal and Raylib (via [ray4laz](https://github.com/GuvaCode/ray4laz)).
 
 ## Running
-Find the pre-built executables for Windows and Linux in `bin/` directory. Good practice would be first to verify them by uploading to https://www.virustotal.com/ use other antivirus service, to ensure this is not not some kind of malware.
+Download the pre-built executables for Windows or Linux from Github Releases page https://github.com/olatov/raybrick/releases.
 If the pre-built executables do not suit your system (or you don't like taking risks running them), proceed to building from source.
 
 ## Building from Source
@@ -21,6 +21,10 @@ If the pre-built executables do not suit your system (or you don't like taking r
 Build the project manually:
 ```sh
 fpc raybrick.lpr -Fu"/path/to/ray4laz/source"
+```
+or use `lazbuild` if available:
+```sh
+lazbuild raybrick.lpi --build-mode=Release --opt="-Fu/path/to/ray4laz/source"
 ```
 
 Make sure the linker can find the libraylib files appropriate for your system.

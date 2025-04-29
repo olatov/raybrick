@@ -34,7 +34,7 @@ implementation
 uses
   SysUtils, IniFiles,
   RayLib,
-  GameModels, GameState;
+  GameModels;
 
 { TSettings }
 
@@ -54,7 +54,7 @@ var
 begin
   SettingsFile := TIniFile.Create(AFilename);
   try
-    Fullscreen := SettingsFile.ReadBool('window', 'fullscreen', True);
+    Fullscreen := SettingsFile.ReadBool('window', 'fullscreen', False);
     WindowWidth := SettingsFile.ReadInteger(
       'window', 'width', Round(View.Width));
     WindowHeight := SettingsFile.ReadInteger(

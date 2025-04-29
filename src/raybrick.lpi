@@ -78,7 +78,7 @@
         <CompilerOptions>
           <Version Value="11"/>
           <Target>
-            <Filename Value="raybrick"/>
+            <Filename Value="bin/$(TargetCPU)-$(TargetOS)/raybrick"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -86,34 +86,6 @@
           </SearchPaths>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
-            <Optimizations>
-              <OptimizationLevel Value="3"/>
-            </Optimizations>
-          </CodeGeneration>
-          <Linking>
-            <Debugging>
-              <GenerateDebugInfo Value="False"/>
-              <RunWithoutDebug Value="True"/>
-              <StripSymbols Value="True"/>
-            </Debugging>
-            <LinkSmart Value="True"/>
-          </Linking>
-        </CompilerOptions>
-      </Item>
-      <Item Name="Win32">
-        <CompilerOptions>
-          <Version Value="11"/>
-          <Target>
-            <Filename Value="raybrick"/>
-          </Target>
-          <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir)"/>
-            <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
-          </SearchPaths>
-          <CodeGeneration>
-            <SmartLinkUnit Value="True"/>
-            <TargetCPU Value="i386"/>
-            <TargetOS Value="win32"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>

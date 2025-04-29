@@ -1,12 +1,7 @@
 *.bak
-*.o
-*.ppu
-*.exe
-*.dll
 *.lps
 *.res
-*.rc
-*.or
-src/raybrick
+*.wpo
 src/lib/
+src/bin/
 backup/
