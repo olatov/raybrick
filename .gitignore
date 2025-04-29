@@ -1,0 +1,7 @@
+*.bak
+*.lps
+*.res
+*.wpo
+src/lib/
+src/bin/
+backup/
