@@ -7,13 +7,26 @@ interface
 uses
   RayLib;
 
+{$IFDEF LINUX}
+  {$DEFINE RAY_STATIC}
+{$ENDIF}
+
+{$IFNDEF RAY_STATIC}
+const
+  cDllName =
+             {$IFDEF WINDOWS} 'libraylib.dll'; {$IFEND}
+             {$IFDEF LINUX} 'libraylib.so'; {$IFEND}
+             {$IFDEF DARWIN} 'libraylib.dylib'; {$IFEND}
+             {$IFDEF HAIKU} 'libraylib.so'; {$IFEND}
+{$ENDIF}
+
 operator + (const AFirst, ASecond: TVector2): TVector2; overload; inline;
 operator - (const AFirst, ASecond: TVector2): TVector2; overload; inline;
 operator * (const AFirst, ASecond: TVector2): TVector2; overload; inline;
 operator / (const AFirst, ASecond: TVector2): TVector2; overload; inline;
 
 { Temporary declaration because of mistake in RayMath unit }
-function Vector2ClampValue(v: TVector2; min, max: Single): TVector2; cdecl; external name 'Vector2ClampValue';
+function Vector2ClampValue(v: TVector2; min, max: Single): TVector2; cdecl; external {$IFNDEF RAY_STATIC}cDllName{$ENDIF} name 'Vector2ClampValue';
 
 implementation
 
