@@ -17,6 +17,8 @@ type
     VSync: Boolean;
     ShowFPS: Boolean;
     Muted: Boolean;
+    MouseSensitivity: Single;
+    MouseLocked: Boolean;
     Filename: String;
     constructor Create;
     constructor Create(const AFileName: String);
@@ -46,6 +48,7 @@ end;
 constructor TSettings.Create(const AFileName: String);
 begin
   Filename := AFilename;
+  MouseLocked := True;
 end;
 
 procedure TSettings.LoadFromFile(const AFilename: String);
@@ -64,6 +67,8 @@ begin
     VSync := SettingsFile.ReadBool('window', 'vsync', True);
     ShowFPS := SettingsFile.ReadBool('window', 'show_fps', False);
     Muted := SettingsFile.ReadBool('audio', 'muted', False);
+    MouseSensitivity := SettingsFile.ReadFloat(
+      'control', 'mouse_sensitivity', 12);
   finally
     FreeAndNil(SettingsFile);
   end;
@@ -86,6 +91,7 @@ begin
     SettingsFile.WriteBool('window', 'vsync', VSync);
     SettingsFile.WriteBool('window', 'show_fps', ShowFPS);
     SettingsFile.WriteBool('audio', 'muted', Muted);
+    SettingsFile.WriteFloat('control', 'mouse_sensitivity', MouseSensitivity);
   finally
     FreeAndNil(SettingsFile);
   end;

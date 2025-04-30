@@ -115,6 +115,7 @@ begin
   SetTextureFilter(Target.texture, TEXTURE_FILTER_BILINEAR);
 
   ConfigureFPS;
+  LockMouse;
 
   if Settings.Fullscreen then ApplyFullscreen(Settings.Fullscreen);
 

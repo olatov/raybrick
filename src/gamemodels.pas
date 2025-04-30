@@ -150,8 +150,7 @@ type
     property Gun: TGun read GetGun;
     constructor Create(AWidth, AHeight: Single); reintroduce;
     procedure Stop;
-    procedure MoveLeft;
-    procedure MoveRight;
+    procedure Move(const ADirection: TVector2);
     procedure Update(const ADT: Single); override;
   end;
 
@@ -316,16 +315,9 @@ begin
   Velocity := Vector2Zero;
 end;
 
-procedure TPaddle.MoveLeft;
+procedure TPaddle.Move(const ADirection: TVector2);
 begin
-  Velocity := Vector2Create(-MaxSpeed, 0);
-  if Assigned(specialize FindPowerUp<TQuickPaddle>) then
-    Velocity := Vector2Scale(Velocity, 1.7);
-end;
-
-procedure TPaddle.MoveRight;
-begin
-  Velocity := Vector2Create(MaxSpeed, 0);
+  Velocity := Vector2Scale(ADirection, MaxSpeed);
   if Assigned(specialize FindPowerUp<TQuickPaddle>) then
     Velocity := Vector2Scale(Velocity, 1.7);
 end;

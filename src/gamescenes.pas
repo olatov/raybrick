@@ -128,12 +128,13 @@ begin
   Renderer.ControlsTitleColor := ORANGE;
 
   Renderer.ControlsLines := [
-    '[A] or [Left]: Move paddle left',
-    '[D] or [Right]: Move paddle right',
-    '[LCtrl] or [Space]: Launch ball / Shoot',
+    '[A] or [Left] or [Move mouse left]: Move paddle left',
+    '[D] or [Right] or [Move mouse right]: Move paddle right',
+    '[LCtrl] or [Space] or [Mouse left button]: Launch ball / Shoot',
     '[F] or [F11]: Toggle fullscreen',
+    '[F12]: Release mouse',
     '[M]: Mute sound',
-    '[P] or [Enter]: Pause / resume',
+    '[P] or [Enter] or [Mouse right button]: Pause / resume',
     '[Esc]: Exit game'
   ];
   Renderer.ControlsLinesColor := YELLOW;
@@ -142,7 +143,9 @@ begin
 
   while not WindowShouldClose do
   begin
-    if GetKeyPressed <> 0 then Break;
+    if (GetKeyPressed <> 0)
+        or IsMouseButtonPressed(MOUSE_BUTTON_LEFT) then
+      Break;
 
     Renderer.StartTextColor := specialize IfThen<TColor>(
       Sin(GetTime * 2) >= -0.9, ORANGE, BLANK);
@@ -435,24 +438,47 @@ procedure TGamePlayScene.Run;
     Obj: TGameObject;
     Wall: TWall;
     Paddle: TPaddle;
+    MouseDelta: TVector2;
   begin
     if IsKeyPressed(KEY_F) or IsKeyPressed(KEY_F11) then ToggleFullscreen;
     if IsKeyPressed(KEY_M) then Settings.Muted := not Settings.Muted;
 
     if not State.GameOver then
     begin
-      if IsKeyPressed(KEY_P) or IsKeyPressed(KEY_ENTER) then State.TogglePause;
+      if IsKeyPressed(KEY_P) or IsKeyPressed(KEY_ENTER)
+          or IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)
+        then State.TogglePause;
 
       Paddle := State.FindPaddle;
       Assert(Assigned(Paddle));
       Paddle.Stop;
-      if IsKeyDown(KEY_LEFT) or IsKeyDown(KEY_A) then Paddle.MoveLeft;
-      if IsKeyDown(KEY_RIGHT) or IsKeyDown(KEY_D) then Paddle.MoveRight;
-      if IsKeyDown(KEY_SPACE) or IsKeyDown(KEY_LEFT_CONTROL) then
+
+      if IsKeyDown(KEY_LEFT) or IsKeyDown(KEY_A) then
+        Paddle.Move(Vector2Create(-1, 0));
+
+      if IsKeyDown(KEY_RIGHT) or IsKeyDown(KEY_D) then
+        Paddle.Move(Vector2Create(1, 0));
+
+      MouseDelta := GetMouseDelta;
+      if not IsZero(MouseDelta.x) then
+        Paddle.Move(Vector2Create(
+          MouseDelta.x * Settings.MouseSensitivity * 0.01, 0));
+
+      if IsKeyDown(KEY_SPACE) or IsKeyDown(KEY_LEFT_CONTROL)
+          or IsMouseButtonDown(MOUSE_BUTTON_LEFT) then
       begin
         State.LaunchBalls;
         State.Shoot;
+
+        if IsMouseButtonDown(MOUSE_BUTTON_LEFT)
+            and not Settings.MouseLocked then
+          LockMouse;
       end;
+
+      if IsKeyPressed(KEY_F12) then ReleaseMouse;
+
+      if Settings.MouseLocked then
+        SetMousePosition(Trunc(View.width / 2), Trunc(View.height / 2));
     end;
   end;
 

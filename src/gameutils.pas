@@ -8,6 +8,9 @@ uses
   RayLib;
 
 procedure ApplyFullscreen(AFullscreen: Boolean);
+procedure LockMouse;
+procedure ReleaseMouse;
+
 function LoadTextureFromResource(
   const AResourceName: String; const AFileType: String): TTexture;
 function LoadImageFromResource(const AResourceName: String;
@@ -25,20 +28,30 @@ uses
   {$ifdef MSWINDOWS}
     Windows,
   {$endif}
-  Classes, SysUtils;
+  Classes, SysUtils,
+  GameSettings;
 
 procedure ApplyFullscreen(AFullscreen: Boolean);
 begin
   if AFullscreen then
-  begin
-    RayLib.HideCursor;
-    ClearWindowState(FLAG_WINDOW_RESIZABLE);
-  end else
-  begin
-    RayLib.ShowCursor;
+    ClearWindowState(FLAG_WINDOW_RESIZABLE)
+  else
     SetWindowState(FLAG_WINDOW_RESIZABLE);
-  end;
   ToggleBorderlessWindowed;
+end;
+
+procedure LockMouse;
+begin
+  Settings.MouseLocked := True;
+  HideCursor;
+end;
+
+procedure ReleaseMouse;
+begin
+  if Settings.Fullscreen then Exit;
+
+  Settings.MouseLocked := False;
+  ShowCursor;
 end;
 
 function LoadTextureFromResource(
