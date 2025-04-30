@@ -143,10 +143,14 @@ end;
 
 destructor TRayApplication.Destroy;
 begin
+  ReleaseMouse;
   UnloadRenderTexture(Target);
 
   Settings.WindowWidth := GetScreenWidth;
   Settings.WindowHeight := GetScreenHeight;
+
+  ClearWindowState(FLAG_WINDOW_MAXIMIZED);
+  SetWindowSize(320, 200);
 
   CloseAudioDevice;
   CloseWindow;
