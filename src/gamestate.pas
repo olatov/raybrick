@@ -61,7 +61,8 @@ implementation
 
 uses
   SysUtils, Math,
-  RayMath;
+  RayMath,
+  GameMath;
 
 { TGameState }
 
@@ -138,11 +139,10 @@ begin
           if (Ball.Velocity.y > 0) and Ball.CollidesWith(Paddle) then
           begin
             Ball.BounceOff(Paddle);
-            Ball.Velocity := Vector2Add(
-              Ball.Velocity,
-              Vector2Scale(
-                Vector2Normalize(Ball.Velocity),
-                Ball.BaseSpeed * 0.01));
+            Ball.Velocity := Ball.Velocity
+              + Vector2Scale(
+                  Vector2Normalize(Ball.Velocity),
+                  Ball.BaseSpeed * 0.01);
 
             if Paddle.HasCatch then
             begin
@@ -528,12 +528,15 @@ begin
   Result := TBall.Create;
   Result.Color := ColorAlpha(WHITE, 0.9);
   Result.Radius := 12;
-  Result.Position := Vector2Add(
-    APaddle.Position,
-    Vector2Create(APaddle.Dimensions.x / 6, 0));
+
+  Result.Position := APaddle.Position
+    + Vector2Create(APaddle.Dimensions.x * ((Random * 0.32) - 0.16), 0);
+
   Result.DefaultSpeed := Result.BaseSpeed
     + (Level - 1) * Result.PerLevelSpeedIncrement;
-  Result.Velocity := Vector2Create(1, -2);
+
+  Result.Velocity := Vector2Create(0, -1);
+  Result.BounceOff(APaddle);
   Result.ResetSpeed;
   Result.JoinWith(APaddle);
 

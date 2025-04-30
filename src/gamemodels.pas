@@ -207,7 +207,9 @@ var
 implementation
 
 uses
-  SysUtils, Math, RayMath;
+  SysUtils, Math,
+  RayMath,
+  GameMath;
 
 { TBonus }
 
@@ -227,7 +229,7 @@ end;
 
 procedure TBonus.Randomize;
 begin
-  case RandomRange(1, 68) of
+  case GetRandomValue(1, 67) of
     1..21: BonusType := Score25;
     22..35: BonusType := Score50;
     36..45: BonusType := Score100;
@@ -242,7 +244,7 @@ begin
     67: BonusType := OneUp;
   end;
 
-  Velocity := Vector2Create(0, RandomRange(120, 320));
+  Velocity := Vector2Create(0, GetRandomValue(120, 320));
 end;
 
 procedure TBonus.Update(const ADT: Single);
@@ -276,7 +278,7 @@ begin
   LifetimeTimer := Max(LifetimeTimer - ADT, 0);
 
   if (BaseWidth > 0) and (Dimensions.x < BaseWidth) then
-    Dimensions := Vector2Add(Dimensions, Vector2Create(BaseWidth * ADT * 1.5, 0));
+    Dimensions := Dimensions + Vector2Create(BaseWidth * ADT * 1.5, 0);
 
   if (LifetimeTimer < 10) and (BaseWidth > 0) then
     Dimensions := Vector2Create(BaseWidth * (LifetimeTimer / 10), Dimensions.y);
@@ -300,7 +302,7 @@ function TPaddle.GetDimensions: TVector2;
 begin
   Result := inherited GetDimensions;
   if Assigned(specialize FindPowerUp<TLargePaddle>) then
-    Result := Vector2Multiply(Result, Vector2Create(1.5, 1));
+    Result *= Vector2Create(1.5, 1);
 end;
 
 constructor TPaddle.Create(AWidth, AHeight: Single);
@@ -446,7 +448,7 @@ end;
 
 procedure TGameObject.Update(const ADT: Single);
 begin
-  Position := Vector2Add(Position, Vector2Scale(Velocity, ADT));
+  Position += Vector2Scale(Velocity, ADT);
 end;
 
 procedure TGameObject.Remove;
@@ -578,13 +580,13 @@ begin
     - EffectiveRadius;
   Joint := TBallJoint.Create;
   Joint.Paddle := APaddle;
-  Joint.Offset := Vector2Subtract(Position, APaddle.Position);
+  Joint.Offset := Position - APaddle.Position;
 end;
 
 procedure TBall.Launch;
 begin
   if not Caught then Exit;
-  Velocity := Vector2Add(Velocity, Vector2Scale(Joint.Paddle.Velocity, 0.4));
+  Velocity := Velocity + Vector2Scale(Joint.Paddle.Velocity, 0.4);
   FreeAndNil(Joint);
 end;
 
@@ -594,12 +596,12 @@ begin
 
   if Caught then
   begin
-    Position := Vector2Add(Joint.Paddle.Position, Joint.Offset);
+    Position := Joint.Paddle.Position + Joint.Offset;
     Exit;
   end;
 
   if Slow then
-    Position := Vector2Subtract(Position, Vector2Scale(Velocity, 1/3 * ADT));
+    Position -= Vector2Scale(Velocity, 1/3 * ADT);
 end;
 
 function TBall.Clone: TBall;
@@ -646,7 +648,7 @@ begin
     Velocity := Vector2Rotate(
       Vector2Scale(Normal, Vector2Length(Velocity)),
       ((Position.x - Paddle.Position.x) / Paddle.Dimensions.x * 120) * DEG2RAD);
-    Velocity := Vector2Add(Velocity, Vector2Scale(Paddle.Velocity, 0.05));
+    Velocity := Velocity + Vector2Scale(Paddle.Velocity, 0.05);
     Exit;
   end;
 
@@ -656,14 +658,14 @@ begin
 
   Normal := Vector2Zero;
   if CollisionRect.width > CollisionRect.height then
-    Normal := Vector2Add(Normal, Vector2Create(0, 1))
+    Normal += Vector2Create(0, 1)
   else
-    Normal := Vector2Add(Normal, Vector2Create(1, 0));
+    Normal += Vector2Create(1, 0);
 
   Offset := Vector2Scale(
     Vector2Normalize(Velocity),
     Min(CollisionRect.width, CollisionRect.height));
-  Position := Vector2Subtract(Position, Offset);
+  Position -= Offset;
 
   Velocity := Vector2Reflect(Velocity, Normal);
 end;

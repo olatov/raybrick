@@ -139,6 +139,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="GameUtils"/>
       </Unit>
+      <Unit>
+        <Filename Value="gamemath.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="GameMath"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
