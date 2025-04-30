@@ -132,7 +132,7 @@ begin
     '[D] or [Right] or [Move mouse right]: Move paddle right',
     '[LCtrl] or [Space] or [Mouse left button]: Launch ball / Shoot',
     '[F] or [F11]: Toggle fullscreen',
-    '[F12]: Release mouse',
+    '[F10]: Release mouse',
     '[M]: Mute sound',
     '[P] or [Enter] or [Mouse right button]: Pause / resume',
     '[Esc]: Exit game'
@@ -475,7 +475,7 @@ procedure TGamePlayScene.Run;
           LockMouse;
       end;
 
-      if IsKeyPressed(KEY_F12) then ReleaseMouse;
+      if IsKeyPressed(KEY_F10) then ReleaseMouse;
 
       if Settings.MouseLocked then
         SetMousePosition(Trunc(View.width / 2), Trunc(View.height / 2));

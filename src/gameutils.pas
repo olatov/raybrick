@@ -43,15 +43,17 @@ end;
 procedure LockMouse;
 begin
   Settings.MouseLocked := True;
-  HideCursor;
+  RayLib.HideCursor;
 end;
 
 procedure ReleaseMouse;
 begin
-  if Settings.Fullscreen then Exit;
+  {$ifndef Darwin}
+    if Settings.Fullscreen then Exit;
+  {$endif}
 
   Settings.MouseLocked := False;
-  ShowCursor;
+  RayLib.ShowCursor;
 end;
 
 function LoadTextureFromResource(
