@@ -48,7 +48,6 @@ end;
 constructor TSettings.Create(const AFileName: String);
 begin
   Filename := AFilename;
-  MouseLocked := True;
 end;
 
 procedure TSettings.LoadFromFile(const AFilename: String);
@@ -68,7 +67,7 @@ begin
     ShowFPS := SettingsFile.ReadBool('window', 'show_fps', False);
     Muted := SettingsFile.ReadBool('audio', 'muted', False);
     MouseSensitivity := SettingsFile.ReadFloat(
-      'control', 'mouse_sensitivity', 12);
+      'control', 'mouse_sensitivity', 15);
   finally
     FreeAndNil(SettingsFile);
   end;
