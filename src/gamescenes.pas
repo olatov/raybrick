@@ -324,7 +324,9 @@ begin
   end;
 
   for Obj in State.Objects do
-    if (Obj is TBonus) or ((Obj is TWall) and not (Obj as TWall).Permanent) then
+    if (Obj is TBonus)
+        or (Obj is TBullet)
+        or ((Obj is TWall) and not (Obj as TWall).Permanent) then
       Obj.Remove;
 
   Paddle := State.SpawnPaddle;
@@ -502,7 +504,8 @@ begin
       if not (Settings.Muted or State.Paused) then UpdateMusicStream(Music);
       State.Update(EnsureRange(GetFrameTime, 0.0001, 0.1));
     end
-    else if GetKeyPressed <> 0 then Break;
+    else if (GetKeyPressed <> 0) or IsMouseButtonPressed(MOUSE_BUTTON_LEFT) then
+      Break;
 
     BeginTextureMode(Target);
       Renderer.Render(State);

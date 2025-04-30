@@ -67,7 +67,7 @@ begin
     ShowFPS := SettingsFile.ReadBool('window', 'show_fps', False);
     Muted := SettingsFile.ReadBool('audio', 'muted', False);
     MouseSensitivity := SettingsFile.ReadFloat(
-      'control', 'mouse_sensitivity', 15);
+      'control', 'mouse_sensitivity', 10);
   finally
     FreeAndNil(SettingsFile);
   end;

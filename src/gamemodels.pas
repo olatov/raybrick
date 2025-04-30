@@ -77,7 +77,7 @@ type
     function GetRectangle: TRectangle; override;
   public
   const
-    BaseSpeed = 320;
+    BaseSpeed = 400;
     PerLevelSpeedIncrement = 40;
   var
     Radius: Single;
@@ -228,22 +228,25 @@ end;
 
 procedure TBonus.Randomize;
 begin
-  case GetRandomValue(1, 67) of
-    1..21: BonusType := Score25;
-    22..35: BonusType := Score50;
-    36..45: BonusType := Score100;
-    46..48: BonusType := SlowBall;
-    49..52: BonusType := LongPaddle;
-    53..56: BonusType := Catch;
-    57..58: BonusType := Gun;
-    59..60: BonusType := BigBall;
-    61..62: BonusType := ExtraBalls;
-    63..64: BonusType := QuickPaddle;
-    65..66: BonusType := BottomWall;
-    67: BonusType := OneUp;
+  case RandomRange(1, 170) of
+    1..50: BonusType := Score50;
+    51..71: BonusType := Score100;
+    72..75: BonusType := SlowBall;
+    76..80: BonusType := LongPaddle;
+    81..84: BonusType := Catch;
+    85..87: BonusType := Gun;
+    88..89: BonusType := BigBall;
+    90..91: BonusType := ExtraBalls;
+    {141..142: BonusType := QuickPaddle;}
+    92..94: BonusType := BottomWall;
+    95: BonusType := OneUp;
+    else
+      BonusType := Score25;
   end;
 
-  Velocity := Vector2Create(0, GetRandomValue(120, 320));
+  Velocity := Vector2Create(0, GetRandomValue(120, 240));
+  if BonusType in [Score25, Score50, Score100] then
+    Velocity := Vector2Scale(Velocity, 1.5);
 end;
 
 procedure TBonus.Update(const ADT: Single);
@@ -548,6 +551,8 @@ begin
     Assert(I < 360);
     FVelocity := Vector2Rotate(FVelocity, Rotation);
   end;
+
+  FVelocity := GameMath.Vector2ClampValue(FVelocity, 0, DefaultSpeed * 2.5);
 end;
 
 function TBall.GetRectangle: TRectangle;

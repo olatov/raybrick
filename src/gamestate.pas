@@ -14,7 +14,7 @@ type
 
   TGameState = class
   const
-    BonusChances = 0.125;
+    BonusChances = 0.1;
     ScoreForExtraBall = 2000;
   private
     FPaused: Boolean;
@@ -142,7 +142,7 @@ begin
             Ball.Velocity := Ball.Velocity
               + Vector2Scale(
                   Vector2Normalize(Ball.Velocity),
-                  Ball.BaseSpeed * 0.01);
+                  Ball.BaseSpeed * 0.005);
 
             if Paddle.HasCatch then
             begin
@@ -215,7 +215,6 @@ begin
             if Assigned(OnBonusCollect) then OnBonusCollect(Bonus);
             CollectBonus(Bonus);
           end;
-          Continue;
         end;
         Continue;
       end;
@@ -327,7 +326,7 @@ begin
       begin
         Paddle := FindPaddle;
         Assert(Assigned(Paddle));
-        FindPaddle.PowerUps.Add(TGun.Create(10, 1/3));
+        Paddle.PowerUps.Add(TGun.Create(10, 1/3));
       end;
 
     QuickPaddle:
@@ -546,7 +545,7 @@ end;
 function TGameState.SpawnPaddle: TPaddle;
 begin
   Result := TPaddle.Create(144, 28);
-  Result.MaxSpeed := 720;
+  Result.MaxSpeed := 1080;
   Result.Color := MAROON;
   Result.Position := Vector2Create(
     View.Width / 2,
@@ -588,6 +587,7 @@ var
   X, Y: Integer;
   Brick: TBrick;
   Color: TColor;
+  OneUpAllowed: Boolean = True;
 begin
   for Y := 2 to 9 do
     for X := 1 to (Trunc(View.Width) div BrickWidth) - 2 do
@@ -605,7 +605,10 @@ begin
       if Random <= BonusChances then
       begin
         Brick.Bonus := TBonus.Create;
-        Brick.Bonus.Randomize;
+        repeat
+          Brick.Bonus.Randomize;
+        until (Brick.Bonus.BonusType <> OneUp) or OneUpAllowed;
+        OneUpAllowed := OneUpAllowed and (Brick.Bonus.BonusType <> OneUp);
         Brick.Bonus.Dimensions := Brick.Dimensions;
       end;
 
