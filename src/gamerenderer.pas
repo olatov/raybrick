@@ -176,7 +176,7 @@ var
 begin
   RenderBackground;
 
-  Rectangle := RectangleCreate(48, 48, 984, 270);
+  Rectangle := RectangleCreate(48, 48, 1116, 268);
   DrawRectangleRec(Rectangle, ControlsBoxColor);
   DrawRectangleLinesEx(Rectangle, 1, GRAY);
 
@@ -188,7 +188,7 @@ begin
   for I := 0 to High(ControlsLines) do
     DrawTextEx(
       FontRounded, PChar(ControlsLines[I]),
-      Vector2Create(88, 123 + (24 * I)), 20, 2, ControlsLinesColor);
+      Vector2Create(88, 123 + (20 * I)), 18, 2, ControlsLinesColor);
 
   if not StartText.IsEmpty then
   begin

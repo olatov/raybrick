@@ -128,13 +128,13 @@ begin
   Renderer.ControlsTitleColor := ORANGE;
 
   Renderer.ControlsLines := [
-    '[A] or [Left] or [Move mouse left]: Move paddle left',
-    '[D] or [Right] or [Move mouse right]: Move paddle right',
-    '[LCtrl] or [Space] or [Mouse left button]: Launch ball / Shoot',
+    '[A] or [Left] or [Mouse]: Move paddle left',
+    '[D] or [Right] or [Mouse]: Move paddle right',
+    '[LCtrl] or [Space] or [Mouse LB]: Launch ball / Shoot',
     '[F] or [F11]: Toggle fullscreen',
     '[F10]: Release mouse',
     '[M]: Mute sound',
-    '[P] or [Enter] or [Mouse right button]: Pause / resume',
+    '[P] or [Enter] or [Mouse RB]: Pause / resume',
     '[Esc]: Exit game'
   ];
   Renderer.ControlsLinesColor := YELLOW;
