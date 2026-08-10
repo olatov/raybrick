@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="12"/>
+    <Version Value="13"/>
     <General>
       <Flags>
         <MainUnitHasCreateFormStatements Value="False"/>
@@ -14,10 +14,10 @@
       <ResourceType Value="res"/>
       <Icon Value="0"/>
       <Resources Count="23">
-        <Resource_0 FileName="assets/background/title.jpg" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-TITLE"/>
-        <Resource_1 FileName="assets/background/2.jpg" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-2"/>
-        <Resource_2 FileName="assets/background/3.jpg" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-3"/>
-        <Resource_3 FileName="assets/background/1.jpg" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-1"/>
+        <Resource_0 FileName="assets/background/title.png" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-TITLE"/>
+        <Resource_1 FileName="assets/background/2.png" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-2"/>
+        <Resource_2 FileName="assets/background/3.png" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-3"/>
+        <Resource_3 FileName="assets/background/1.png" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-1"/>
         <Resource_4 FileName="assets/sprite/ball.png" Type="RCDATA" ResourceName="IMAGE-BALL"/>
         <Resource_5 FileName="assets/sprite/brick.png" Type="RCDATA" ResourceName="IMAGE-BRICK"/>
         <Resource_6 FileName="assets/sprite/paddle.png" Type="RCDATA" ResourceName="IMAGE-PADDLE"/>
@@ -30,8 +30,8 @@
         <Resource_13 FileName="assets/audio/music.ogg" Type="RCDATA" ResourceName="MUSIC"/>
         <Resource_14 FileName="assets/audio/wall-bounce.ogg" Type="RCDATA" ResourceName="SOUND-WALL-BOUNCE"/>
         <Resource_15 FileName="assets/audio/bonus-collect.ogg" Type="RCDATA" ResourceName="SOUND-BONUS-COLLECT"/>
-        <Resource_16 FileName="assets/background/4.jpg" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-4"/>
-        <Resource_17 FileName="assets/background/5.jpg" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-5"/>
+        <Resource_16 FileName="assets/background/4.png" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-4"/>
+        <Resource_17 FileName="assets/background/5.png" Type="RCDATA" ResourceName="IMAGE-BACKGROUND-5"/>
         <Resource_18 FileName="assets/audio/ball-extra.ogg" Type="RCDATA" ResourceName="SOUND-BALL-EXTRA"/>
         <Resource_19 FileName="assets/audio/bonus-shot.ogg" Type="RCDATA" ResourceName="SOUND-BONUS-SHOT"/>
         <Resource_20 FileName="assets/audio/brick-shot.ogg" Type="RCDATA" ResourceName="SOUND-BRICK-SHOT"/>
@@ -116,33 +116,23 @@
     <Units>
       <Unit>
         <Filename Value="raybrick.lpr"/>
-        <IsPartOfProject Value="True"/>
         <UnitName Value="Raybrick"/>
       </Unit>
       <Unit>
         <Filename Value="gamerenderer.pas"/>
-        <IsPartOfProject Value="True"/>
         <UnitName Value="GameRenderer"/>
       </Unit>
       <Unit>
         <Filename Value="gamesettings.pas"/>
-        <IsPartOfProject Value="True"/>
         <UnitName Value="GameSettings"/>
       </Unit>
       <Unit>
         <Filename Value="gamescenes.pas"/>
-        <IsPartOfProject Value="True"/>
         <UnitName Value="GameScenes"/>
       </Unit>
       <Unit>
         <Filename Value="gameutils.pas"/>
-        <IsPartOfProject Value="True"/>
         <UnitName Value="GameUtils"/>
-      </Unit>
-      <Unit>
-        <Filename Value="gamemath.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="GameMath"/>
       </Unit>
     </Units>
   </ProjectOptions>

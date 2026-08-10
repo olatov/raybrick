@@ -207,8 +207,7 @@ implementation
 
 uses
   SysUtils, Math,
-  RayMath,
-  GameMath;
+  RayMath;
 
 { TBonus }
 
@@ -552,7 +551,7 @@ begin
     FVelocity := Vector2Rotate(FVelocity, Rotation);
   end;
 
-  FVelocity := GameMath.Vector2ClampValue(FVelocity, 0, DefaultSpeed * 2.5);
+  FVelocity := Vector2ClampValue(FVelocity, 0, DefaultSpeed * 2.5);
 end;
 
 function TBall.GetRectangle: TRectangle;

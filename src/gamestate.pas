@@ -61,8 +61,7 @@ implementation
 
 uses
   SysUtils, Math,
-  RayMath,
-  GameMath;
+  RayMath;
 
 { TGameState }
 

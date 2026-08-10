@@ -25,7 +25,8 @@ program Raybrick;
 {$mode objfpc}{$H+}
 
 {$ifdef DARWIN}
-  {$linklib raylib}
+  {$linkframework Cocoa}
+  {$linkframework IOKit}
 {$endif}
 
 uses

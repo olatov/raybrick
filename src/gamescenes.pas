@@ -70,7 +70,7 @@ type
 implementation
 
 uses
-  Classes, SysUtils, Math,
+  Classes, SysUtils, Math, RayMath,
   GameModels, GameSettings, GameUtils;
 
 { TGameScene }
@@ -172,10 +172,11 @@ begin
 
   Image := LoadImageFromResource('IMAGE-PADDLE', '.png');
   Result.PaddleRectangle := RectangleCreate(0, Y, Image.width, Image.height);
-  ImageDraw(
+  ImageDrawImagePro(
     @Buffer, Image,
     RectangleCreate(0, 0, Image.width, Image.height),
     Result.PaddleRectangle,
+    Vector2Zero, 0,
     WHITE);
   Inc(Y, Image.height);
   MaxWidth := Max(MaxWidth, Image.width);
@@ -183,10 +184,11 @@ begin
 
   Image := LoadImageFromResource('IMAGE-BRICK', '.png');
   Result.BrickRectangle := RectangleCreate(0, Y, Image.width, Image.height);
-  ImageDraw(
+  ImageDrawImagePro(
     @Buffer, Image,
     RectangleCreate(0, 0, Image.width, Image.height),
     RectangleCreate(0, Y, Image.width, Image.height),
+    Vector2Zero, 0,
     WHITE);
   Inc(Y, Image.height);
   MaxWidth := Max(MaxWidth, Image.width);
@@ -194,10 +196,11 @@ begin
 
   Image := LoadImageFromResource('IMAGE-BALL', '.png');
   Result.BallRectangle := RectangleCreate(0, Y, Image.width, Image.height);
-  ImageDraw(
+  ImageDrawImagePro(
     @Buffer, Image,
     RectangleCreate(0, 0, Image.width, Image.height),
     RectangleCreate(0, Y, Image.width, Image.height),
+    Vector2Zero, 0,
     WHITE);
   Inc(Y, Image.height);
   MaxWidth := Max(MaxWidth, Image.width);
@@ -253,7 +256,7 @@ begin
 
   Renderer := TGameRenderer.Create;
   Renderer.BackgroundTexture :=
-    LoadTextureFromResource('IMAGE-BACKGROUND-1', '.jpg');
+    LoadTextureFromResource('IMAGE-BACKGROUND-1', '.png');
   Renderer.BackgroundTint := ColorCreate($60, $70, $80, $ff);
   Renderer.TextureAtlas := BuildTextureAtlas;
   Renderer.FontInterlaced := LoadFontFromResource('FONT-ARCADE-I', '.ttf');
@@ -413,7 +416,7 @@ begin
     Format(
       'IMAGE-BACKGROUND-%d',
       [((State.Level - 1) mod BackgroundCount) + 1]),
-    '.jpg');
+    '.png');
 end;
 
 procedure TGamePlayScene.OnGameOver(Sender: TObject);
