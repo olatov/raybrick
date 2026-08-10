@@ -104,7 +104,7 @@ begin
 
   Renderer := TTitleRenderer.Create;
   Renderer.BackgroundTexture := LoadTextureFromResource(
-    'IMAGE-BACKGROUND-TITLE', '.jpg');;
+    'IMAGE-BACKGROUND-TITLE', '.png');
   Renderer.BackgroundTint := GRAY;
   Renderer.FontRounded := LoadFontFromResource('FONT-ARCADE-R', '.ttf');
   Renderer.FontInterlaced := LoadFontFromResource('FONT-ARCADE-I', '.ttf');;
@@ -172,11 +172,10 @@ begin
 
   Image := LoadImageFromResource('IMAGE-PADDLE', '.png');
   Result.PaddleRectangle := RectangleCreate(0, Y, Image.width, Image.height);
-  ImageDrawImagePro(
+  ImageDraw(
     @Buffer, Image,
     RectangleCreate(0, 0, Image.width, Image.height),
     Result.PaddleRectangle,
-    Vector2Zero, 0,
     WHITE);
   Inc(Y, Image.height);
   MaxWidth := Max(MaxWidth, Image.width);
@@ -184,11 +183,10 @@ begin
 
   Image := LoadImageFromResource('IMAGE-BRICK', '.png');
   Result.BrickRectangle := RectangleCreate(0, Y, Image.width, Image.height);
-  ImageDrawImagePro(
+  ImageDraw(
     @Buffer, Image,
     RectangleCreate(0, 0, Image.width, Image.height),
     RectangleCreate(0, Y, Image.width, Image.height),
-    Vector2Zero, 0,
     WHITE);
   Inc(Y, Image.height);
   MaxWidth := Max(MaxWidth, Image.width);
@@ -196,11 +194,10 @@ begin
 
   Image := LoadImageFromResource('IMAGE-BALL', '.png');
   Result.BallRectangle := RectangleCreate(0, Y, Image.width, Image.height);
-  ImageDrawImagePro(
+  ImageDraw(
     @Buffer, Image,
     RectangleCreate(0, 0, Image.width, Image.height),
     RectangleCreate(0, Y, Image.width, Image.height),
-    Vector2Zero, 0,
     WHITE);
   Inc(Y, Image.height);
   MaxWidth := Max(MaxWidth, Image.width);
