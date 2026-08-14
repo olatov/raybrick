@@ -53,7 +53,7 @@ end;
 procedure TSettings.LoadFromFile(const AFilename: String);
 var
   SettingsFile: TIniFile;
-  SettingsFileScoped: specialize TScoped<TIniFile> ;
+  SettingsFileScoped: specialize TScoped<TIniFile>;
 begin
   SettingsFileScoped := TIniFile.Create(AFilename);
   SettingsFile := SettingsFileScoped.Get;
@@ -63,7 +63,8 @@ begin
   WindowHeight := SettingsFile.ReadInteger(
     'window', 'height', Round(View.Height));
   HiDPI := SettingsFile.ReadBool('window', 'hi_dpi', False);
-  TargetFPS := SettingsFile.ReadInteger('window', 'target_fps', 0);
+  TargetFPS := SettingsFile.ReadInteger(
+    'window', 'target_fps', {$ifdef darwin} 60 {$else} 0 {$endif});
   VSync := SettingsFile.ReadBool('window', 'vsync', True);
   ShowFPS := SettingsFile.ReadBool('window', 'show_fps', False);
   Muted := SettingsFile.ReadBool('audio', 'muted', False);

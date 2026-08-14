@@ -92,12 +92,9 @@ constructor TRayApplication.Create(TheOwner: TComponent);
     else if Settings.TargetFPS = 0 then
     begin
       FPS := MeasureFPS;
-      case FPS of
-        30, 60, 90, 100, 144, 240:
-          SetTargetFPS(FPS);
-        else
-          SetTargetFPS(60);
-      end;
+      if FPS > 144 then
+        { Hard limit when VSync didn't work }
+        SetTargetFPS(60);
     end;
   end;
 
