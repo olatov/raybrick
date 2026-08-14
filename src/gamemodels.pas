@@ -228,7 +228,7 @@ end;
 procedure TBonus.Randomize;
 begin
   case RandomRange(1, 170) of
-    1..50: BonusType := Score50;
+     1..50: BonusType := Score50;
     51..71: BonusType := Score100;
     72..75: BonusType := SlowBall;
     76..80: BonusType := LongPaddle;

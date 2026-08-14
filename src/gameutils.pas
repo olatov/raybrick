@@ -106,50 +106,40 @@ end;
 function LoadMusicStreamFromResource(
   const AResourceName: String; const AFileType: String): TMusic;
 var
-  Stream: TResourceStream;
+  Stream: specialize TScoped<TResourceStream>;
 begin
   Stream := TResourceStream.Create(HINSTANCE, AResourceName, RT_RCDATA);
-  try
-    Result := LoadMusicStreamFromMemory(
-      PChar(AFileType), Stream.Memory, Stream.Size);
-  finally
-    FreeAndNil(Stream);
-  end;
+  Result := LoadMusicStreamFromMemory(
+    PChar(AFileType), Stream.Get.Memory, Stream.Get.Size);
 end;
 
 function LoadSoundFromResource(
   const AResourceName: String; const AFileType: String): TSound;
 var
-  Stream: TResourceStream;
+  Stream: specialize TScoped<TResourceStream>;
   Wave: TWave;
 begin
   Stream := TResourceStream.Create(HINSTANCE, AResourceName, RT_RCDATA);
+  Wave := LoadWaveFromMemory(
+    PChar(AFileType), Stream.Get.Memory, Stream.Get.Size);
   try
-    Wave := LoadWaveFromMemory(PChar(AFileType), Stream.Memory, Stream.Size);
-    try
-      Result := LoadSoundFromWave(Wave);
-    finally
-      UnloadWave(Wave);
-    end;
+    Result := LoadSoundFromWave(Wave);
   finally
-    FreeAndNil(Stream);
+    UnloadWave(Wave);
   end;
 end;
 
 function LoadFontFromResource(const AResourceName: String;
   const AFileType: String): TFont;
+const
+  DefaultSize = 72;
 var
-  Stream: TResourceStream;
+  Stream: specialize TScoped<TResourceStream>;
 begin
   Stream := TResourceStream.Create(HINSTANCE, AResourceName, RT_RCDATA);
-  try
-    Result := LoadFontFromMemory(
-      PChar(AFileType), Stream.Memory, Stream.Size, 72, Nil, 0);
-  finally
-    FreeAndNil(Stream);
-  end;
+  Result := LoadFontFromMemory(
+    PChar(AFileType), Stream.Get.Memory, Stream.Get.Size, DefaultSize, Nil, 0);
 end;
-
 
 end.
 

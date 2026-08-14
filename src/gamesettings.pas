@@ -34,7 +34,7 @@ type
 implementation
 
 uses
-  SysUtils, IniFiles,
+  SysUtils, Types, IniFiles,
   RayLib,
   GameModels;
 
@@ -53,47 +53,44 @@ end;
 procedure TSettings.LoadFromFile(const AFilename: String);
 var
   SettingsFile: TIniFile;
+  SettingsFileScoped: specialize TScoped<TIniFile> ;
 begin
-  SettingsFile := TIniFile.Create(AFilename);
-  try
-    Fullscreen := SettingsFile.ReadBool('window', 'fullscreen', False);
-    WindowWidth := SettingsFile.ReadInteger(
-      'window', 'width', Round(View.Width));
-    WindowHeight := SettingsFile.ReadInteger(
-      'window', 'height', Round(View.Height));
-    HiDPI := SettingsFile.ReadBool('window', 'hi_dpi', False);
-    TargetFPS := SettingsFile.ReadInteger('window', 'target_fps', 0);
-    VSync := SettingsFile.ReadBool('window', 'vsync', True);
-    ShowFPS := SettingsFile.ReadBool('window', 'show_fps', False);
-    Muted := SettingsFile.ReadBool('audio', 'muted', False);
-    MouseSensitivity := SettingsFile.ReadFloat(
-      'control', 'mouse_sensitivity', 10);
-  finally
-    FreeAndNil(SettingsFile);
-  end;
+  SettingsFileScoped := TIniFile.Create(AFilename);
+  SettingsFile := SettingsFileScoped.Get;
+
+  Fullscreen := SettingsFile.ReadBool('window', 'fullscreen', False);
+  WindowWidth := SettingsFile.ReadInteger('window', 'width', Round(View.Width));
+  WindowHeight := SettingsFile.ReadInteger(
+    'window', 'height', Round(View.Height));
+  HiDPI := SettingsFile.ReadBool('window', 'hi_dpi', False);
+  TargetFPS := SettingsFile.ReadInteger('window', 'target_fps', 0);
+  VSync := SettingsFile.ReadBool('window', 'vsync', True);
+  ShowFPS := SettingsFile.ReadBool('window', 'show_fps', False);
+  Muted := SettingsFile.ReadBool('audio', 'muted', False);
+  MouseSensitivity := SettingsFile.ReadFloat(
+    'control', 'mouse_sensitivity', 10);
 end;
 
 procedure TSettings.SaveToFile(const AFilename: String);
 var
   SettingsFile: TIniFile;
+  SettingsFileScoped: specialize TScoped<TIniFile>;
 begin
-  SettingsFile := TIniFile.Create(AFilename);
-  try
-    SettingsFile.WriteBool('window', 'fullscreen', Fullscreen);
-    if not Fullscreen then
-    begin
-      SettingsFile.WriteInteger('window', 'width', WindowWidth);
-      SettingsFile.WriteInteger('window', 'height', WindowHeight);
-    end;
-    SettingsFile.WriteBool('window', 'hi_dpi', HiDPI);
-    SettingsFile.WriteInteger('window', 'target_fps', TargetFPS);
-    SettingsFile.WriteBool('window', 'vsync', VSync);
-    SettingsFile.WriteBool('window', 'show_fps', ShowFPS);
-    SettingsFile.WriteBool('audio', 'muted', Muted);
-    SettingsFile.WriteFloat('control', 'mouse_sensitivity', MouseSensitivity);
-  finally
-    FreeAndNil(SettingsFile);
+  SettingsFileScoped := TIniFile.Create(AFilename);
+  SettingsFile := SettingsFileScoped.Get;
+
+  SettingsFile.WriteBool('window', 'fullscreen', Fullscreen);
+  if not Fullscreen then
+  begin
+    SettingsFile.WriteInteger('window', 'width', WindowWidth);
+    SettingsFile.WriteInteger('window', 'height', WindowHeight);
   end;
+  SettingsFile.WriteBool('window', 'hi_dpi', HiDPI);
+  SettingsFile.WriteInteger('window', 'target_fps', TargetFPS);
+  SettingsFile.WriteBool('window', 'vsync', VSync);
+  SettingsFile.WriteBool('window', 'show_fps', ShowFPS);
+  SettingsFile.WriteBool('audio', 'muted', Muted);
+  SettingsFile.WriteFloat('control', 'mouse_sensitivity', MouseSensitivity);
 end;
 
 procedure TSettings.Load;

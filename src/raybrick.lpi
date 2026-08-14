@@ -134,6 +134,14 @@
         <Filename Value="gameutils.pas"/>
         <UnitName Value="GameUtils"/>
       </Unit>
+      <Unit>
+        <Filename Value="gamestate.pas"/>
+        <UnitName Value="GameState"/>
+      </Unit>
+      <Unit>
+        <Filename Value="gamemodels.pas"/>
+        <UnitName Value="GameModels"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
