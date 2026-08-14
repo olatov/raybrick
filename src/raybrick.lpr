@@ -30,7 +30,7 @@ program Raybrick;
 {$endif}
 
 uses
-  Classes, SysUtils, CustApp,
+  Classes, SysUtils, CustApp, System.Diagnostics,
   RayLib, RayMath,
   GameModels, GameSettings, GameScenes, GameUtils, GameRenderer;
 
@@ -53,11 +53,11 @@ const
 { TRayApplication }
 
 constructor TRayApplication.Create(TheOwner: TComponent);
-  function MeasureFPS(ADuration: Single = 1): Integer;
+  function MeasureFPS(ADuration: Integer = 1000): Integer;
   var
-    Start, Current, Finish: UInt64;
     Rectangle: TRectangle;
     FullWidth: Single;
+    SW: TStopwatch;
   begin
     FullWidth := View.width * 0.5;
     Rectangle.width := FullWidth;
@@ -65,22 +65,18 @@ constructor TRayApplication.Create(TheOwner: TComponent);
     Rectangle.x := (View.width - Rectangle.width) / 2;
     Rectangle.y := (View.height - Rectangle.height) / 2;
 
-    Start := GetTickCount64;
-    Finish := GetTickCount64 + Trunc(ADuration * 1000);
-    Current := Start;
-
+    SW := TStopwatch.StartNew;
     repeat
       BeginTextureMode(Target);
         ClearBackground(ColorCreate(0, 0, 32, 255));
         Rectangle.width := FullWidth;
         DrawRectangleLinesEx(Rectangle, 1, GRAY);
-        Rectangle.width := Remap(Current, Start, Finish, 0, FullWidth);
+        Rectangle.width := SW.ElapsedMilliseconds / ADuration * FullWidth;
         DrawRectangleRec(Rectangle, VIOLET);
         Result := GetFPS;
       EndTextureMode;
       TRenderer.RenderTarget(Target);
-      Current := GetTickCount64;
-    until Current >= Finish;
+    until SW.ElapsedMilliseconds > ADuration;
   end;
 
   procedure ConfigureFPS;
@@ -135,8 +131,11 @@ var
   Scene: T;
 begin
   Scene := T.Create(Target);
-  Scene.Run;
-  FreeAndNil(Scene);
+  try
+    Scene.Run;
+  finally
+    FreeAndNil(Scene);
+  end;
 end;
 
 destructor TRayApplication.Destroy;
@@ -163,8 +162,11 @@ var
 
 begin
   Application := TRayApplication.Create(Nil);
-  Application.Title := AppTitle;
-  Application.Run;
-  FreeAndNil(Application);
+  try
+    Application.Title := AppTitle;
+    Application.Run;
+  finally
+    FreeAndNil(Application);
+  end;
 end.
 

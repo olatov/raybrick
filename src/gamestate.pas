@@ -138,17 +138,14 @@ begin
           if (Ball.Velocity.y > 0) and Ball.CollidesWith(Paddle) then
           begin
             Ball.BounceOff(Paddle);
-            Ball.Velocity := Ball.Velocity
-              + Vector2Scale(
-                  Vector2Normalize(Ball.Velocity),
-                  Ball.BaseSpeed * 0.005);
+            Ball.Velocity := Ball.Velocity +
+              (Vector2Normalize(Ball.Velocity) * (Ball.BaseSpeed * 0.005));
 
             if Paddle.HasCatch then
             begin
               Ball.JoinWith(Paddle);
-              Ball.Velocity := Vector2Scale(
-                Vector2Normalize(Ball.Velocity),
-                Ball.DefaultSpeed);
+              Ball.Velocity :=
+                Vector2Normalize(Ball.Velocity) * Ball.DefaultSpeed;
               Continue;
             end;
 
@@ -353,9 +350,9 @@ begin
             Wall.Remove;
 
         Wall := TWall.Create;
-        Wall.Dimensions := Vector2Create(0, 16);
+        Wall.Dimensions := [0, 16];
         Wall.BaseWidth := View.Width;
-        Wall.Position := Vector2Create(View.Width / 2, View.Height - 18);
+        Wall.Position := [View.Width / 2, View.Height - 18];
         Wall.Color := ORANGE;
         Wall.LifetimeTimer := 30;
         Wall.Visible := True;
@@ -436,59 +433,49 @@ begin
 end;
 
 constructor TGameState.Create;
-  procedure Init;
-  var
-    Wall: TWall;
-    BallDestroyer: TBallDestroyer;
-  begin
-    Objects.Clear;
-
-    SpareBallCount := 2;
-    Score := 0;
-
-    SpawnPaddle;
-
-    { Left }
-    Wall := TWall.Create;
-    Wall.Dimensions := Vector2Create(100, View.Height * 2);
-    Wall.Position := Vector2Create(
-       -Wall.Dimensions.x / 2,
-      View.Height / 2);
-    Wall.Permanent := True;
-    Wall.Visible := False;
-    Objects.Add(Wall);
-
-    { Right }
-    Wall := TWall.Create;
-    Wall.Dimensions := Vector2Create(100, View.Height * 2);
-    Wall.Position := Vector2Create(
-      View.Width + (Wall.Dimensions.x / 2),
-      View.Height / 2);
-    Wall.Permanent := True;
-    Wall.Visible := False;
-    Objects.Add(Wall);
-
-    { Top }
-    Wall := TWall.Create;
-    Wall.Dimensions := Vector2Create(View.Width * 2, 100);
-    Wall.Position := Vector2Create(
-      View.Width / 2,
-      -Wall.Dimensions.y / 2);
-    Wall.Permanent := True;
-    Wall.Visible := False;
-    Objects.Add(Wall);
-
-    BallDestroyer := TBallDestroyer.Create;
-    BallDestroyer.Exists := True;
-    BallDestroyer.Dimensions := Vector2Create(10000, 10000);
-    BallDestroyer.Position := Vector2Create(
-      View.Width / 2,
-      (View.Height * 1.1) + (BallDestroyer.Dimensions.y / 2));
-    Objects.Add(BallDestroyer);
-  end;
+var
+  Wall: TWall;
+  BallDestroyer: TBallDestroyer;
 begin
   Objects := TGameObjectList.Create(True);
-  Init;
+
+  SpareBallCount := 2;
+  Score := 0;
+
+  SpawnPaddle;
+
+  { Left }
+  Wall := TWall.Create;
+  Wall.Dimensions := [100, View.Height * 2];
+  Wall.Position := [-Wall.Dimensions.x / 2, View.Height / 2];
+  Wall.Permanent := True;
+  Wall.Visible := False;
+  Objects.Add(Wall);
+
+  { Right }
+  Wall := TWall.Create;
+  Wall.Dimensions := [100, View.Height * 2];
+  Wall.Position := [View.Width + (Wall.Dimensions.x / 2), View.Height / 2];
+  Wall.Permanent := True;
+  Wall.Visible := False;
+  Objects.Add(Wall);
+
+  { Top }
+  Wall := TWall.Create;
+  Wall.Dimensions := [View.Width * 2, 100];
+  Wall.Position := [View.Width / 2, -Wall.Dimensions.y / 2];
+  Wall.Permanent := True;
+  Wall.Visible := False;
+  Objects.Add(Wall);
+
+  BallDestroyer := TBallDestroyer.Create;
+  BallDestroyer.Exists := True;
+  BallDestroyer.Dimensions := [10000, 10000];
+  BallDestroyer.Position := [
+    View.Width / 2,
+    (View.Height * 1.1) + (BallDestroyer.Dimensions.y / 2)
+  ];
+  Objects.Add(BallDestroyer);
 end;
 
 destructor TGameState.Destroy;
@@ -528,12 +515,12 @@ begin
   Result.Radius := 12;
 
   Result.Position := APaddle.Position
-    + Vector2Create(APaddle.Dimensions.x * ((Random * 0.32) - 0.16), 0);
+    + [APaddle.Dimensions.x * ((Random * 0.32) - 0.16), 0];
 
   Result.DefaultSpeed := Result.BaseSpeed
     + (Level - 1) * Result.PerLevelSpeedIncrement;
 
-  Result.Velocity := Vector2Create(0, -1);
+  Result.Velocity := [0, -1];
   Result.BounceOff(APaddle);
   Result.ResetSpeed;
   Result.JoinWith(APaddle);
@@ -546,9 +533,10 @@ begin
   Result := TPaddle.Create(144, 28);
   Result.MaxSpeed := 1080;
   Result.Color := MAROON;
-  Result.Position := Vector2Create(
+  Result.Position := [
     View.Width / 2,
-    View.Height - Result.Dimensions.y - 32);
+    View.Height - Result.Dimensions.y - 32
+  ];
   Objects.Add(Result);
 end;
 
@@ -598,7 +586,7 @@ begin
       Brick.Color := Color;
       Brick.Score := ((9 - Y) div 2) + 1;
       Brick.Position := GetBrickPosition(X, Y, Level);
-      Brick.Dimensions := Vector2Create(BrickWidth, BrickHeight);
+      Brick.Dimensions := [BrickWidth, BrickHeight];
       Brick.Velocity := Vector2Zero;
 
       if Random <= BonusChances then

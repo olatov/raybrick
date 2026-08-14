@@ -119,9 +119,10 @@ begin
   TextDimensions := MeasureTextEx(AFont, Chars, FontSize, Spacing);
   DrawTextEx(
     AFont, Chars,
-    Vector2Create(
+    [
       (View.Width - TextDimensions.x) / 2,
-      (View.Height - TextDimensions.y) / 2),
+      (View.Height - TextDimensions.y) / 2
+    ],
     FontSize, Spacing, Color);
 end;
 
@@ -131,7 +132,7 @@ var
 const
   Aspect = 16 / 9;
 begin
-  if (GetScreenWidth / GetScreenHeight) <= (16 / 9) then
+  if (GetScreenWidth / GetScreenHeight) <= Aspect then
   begin
     DestRectangle.width := GetScreenWidth;
     DestRectangle.height := DestRectangle.width / Aspect;
@@ -153,7 +154,7 @@ begin
         0, 0,
         ATarget.texture.width, -ATarget.texture.height),
       DestRectangle,
-      Vector2Zero,
+      [0, 0],
       0,
       WHITE);
   EndDrawing;
@@ -183,12 +184,12 @@ begin
   if not ControlsTitle.IsEmpty then
     DrawTextEx(
       FontRounded, PChar(ControlsTitle),
-      Vector2Create(88, 73), 24, 2, ControlsTitleColor);
+      [88, 73], 24, 2, ControlsTitleColor);
 
   for I := 0 to High(ControlsLines) do
     DrawTextEx(
       FontRounded, PChar(ControlsLines[I]),
-      Vector2Create(88, 123 + (20 * I)), 18, 2, ControlsLinesColor);
+      [88, 123 + (20 * I)], 18, 2, ControlsLinesColor);
 
   if not StartText.IsEmpty then
   begin
@@ -196,9 +197,10 @@ begin
     TextDimensions := MeasureTextEx(FontInterlaced, Chars, 36, 1);
     DrawTextEx(
       FontInterlaced, Chars,
-      Vector2Create(
+      [
         (View.width - TextDimensions.x) / 2,
-        (View.Height * 2/3) - (TextDimensions.y) / 2),
+        (View.Height * 2/3) - (TextDimensions.y) / 2
+      ],
       36, 1, StartTextColor);
   end;
 end;
@@ -211,7 +213,7 @@ procedure TGameRenderer.RenderTexture(
 begin
   DrawTexturePro(
     FTextureAtlas.Texture, ASrcRectangle, ADestRectangle,
-    Vector2Zero, 0, ATint);
+    [0, 0], 0, ATint);
 end;
 
 procedure TGameRenderer.RenderBall(const ABall: TBall);
@@ -285,9 +287,10 @@ begin
   DrawTextEx(
     FontRounded,
     PChar(Text),
-    Vector2Create(
+    [
       ABonus.Rectangle.x + (ABonus.Rectangle.width - TextDimensions.x) / 2,
-      ABonus.Rectangle.y + (ABonus.Rectangle.height - TextDimensions.y) / 2),
+      ABonus.Rectangle.y + (ABonus.Rectangle.height - TextDimensions.y) / 2
+    ],
     FontSize, 1, LIGHTGRAY);
 end;
 
@@ -363,9 +366,8 @@ procedure TGameRenderer.Render(const AState: TGameState);
     DrawRectangleRounded(Rectangle, 0.3, 5,ColorAlpha(MAGENTA, 0.2));
     DrawTextEx(
       FontInterlaced, Chars,
-      Vector2Create(
-        TextDimensions.x * 0.025 + 2, (TextDimensions.y * 0.05) + 1),
-        FontSize, 1, ColorBrightness(ORANGE, -0.1));
+      [TextDimensions.x * 0.025 + 2, (TextDimensions.y * 0.05) + 1],
+      FontSize, 1, ColorBrightness(ORANGE, -0.1));
   end;
 
   procedure DrawLevel;
@@ -387,8 +389,7 @@ procedure TGameRenderer.Render(const AState: TGameState);
     DrawRectangleRounded(Rectangle, 0.3, 5,ColorAlpha(MAGENTA, 0.2));
     DrawTextEx(
       FontInterlaced, Chars,
-      Vector2Create(
-        View.Width - (TextDimensions.x * 1.05), (TextDimensions.y * 0.05) + 1),
+      [View.Width - (TextDimensions.x * 1.05), (TextDimensions.y * 0.05) + 1],
       FontSize, 1, ColorBrightness(ORANGE, -0.1));
   end;
 

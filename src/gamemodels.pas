@@ -243,9 +243,9 @@ begin
       BonusType := Score25;
   end;
 
-  Velocity := Vector2Create(0, GetRandomValue(120, 240));
+  Velocity := [0, GetRandomValue(120, 240)];
   if BonusType in [Score25, Score50, Score100] then
-    Velocity := Vector2Scale(Velocity, 1.5);
+    Velocity := Velocity * 1.5;
 end;
 
 procedure TBonus.Update(const ADT: Single);
@@ -279,10 +279,10 @@ begin
   LifetimeTimer := Max(LifetimeTimer - ADT, 0);
 
   if (BaseWidth > 0) and (Dimensions.x < BaseWidth) then
-    Dimensions := Dimensions + Vector2Create(BaseWidth * ADT * 1.5, 0);
+    Dimensions := Dimensions + [BaseWidth * ADT * 1.5, 0];
 
   if (LifetimeTimer < 10) and (BaseWidth > 0) then
-    Dimensions := Vector2Create(BaseWidth * (LifetimeTimer / 10), Dimensions.y);
+    Dimensions := [BaseWidth * (LifetimeTimer / 10), Dimensions.y];
 
   if IsZero(LifetimeTimer) then Remove;
 end;
@@ -303,25 +303,25 @@ function TPaddle.GetDimensions: TVector2;
 begin
   Result := inherited GetDimensions;
   if Assigned(specialize FindPowerUp<TLargePaddle>) then
-    Result *= Vector2Create(1.5, 1);
+    Result := Result * [1.5, 1];
 end;
 
 constructor TPaddle.Create(AWidth, AHeight: Single);
 begin
   inherited Create;
-  Dimensions := Vector2Create(AWidth, AHeight);
+  Dimensions := [AWidth, AHeight];
 end;
 
 procedure TPaddle.Stop;
 begin
-  Velocity := Vector2Zero;
+  Velocity := [0, 0];
 end;
 
 procedure TPaddle.Move(const ADirection: TVector2);
 begin
-  Velocity := Vector2Scale(ADirection, MaxSpeed);
+  Velocity := ADirection * MaxSpeed;
   if Assigned(specialize FindPowerUp<TQuickPaddle>) then
-    Velocity := Vector2Scale(Velocity, 1.7);
+    Velocity := Velocity * 1.7;
 end;
 
 procedure TPaddle.Update(const ADT: Single);
@@ -390,8 +390,8 @@ begin
   for I := 1 to 2 do
   begin
     Bullet := TBullet.Create;
-    Bullet.Velocity := Vector2Create(0, -Bullet.DefaultSpeed);
-    Bullet.Dimensions := Vector2Create(8, 12);
+    Bullet.Velocity := [0, -Bullet.DefaultSpeed];
+    Bullet.Dimensions := [8, 12];
     Bullet.Color := ColorAlpha(MAGENTA, 0.7);
     Result[I] := Bullet;
   end;
@@ -442,7 +442,7 @@ end;
 
 procedure TGameObject.Update(const ADT: Single);
 begin
-  Position += Vector2Scale(Velocity, ADT);
+  Position := Position + (Velocity * ADT);
 end;
 
 procedure TGameObject.Remove;
@@ -531,7 +531,7 @@ end;
 procedure TBall.SetVelocity(AValue: TVector2);
   function GetAngle: Single;
   begin
-    Result := Abs(FMod(Vector2Angle(FVelocity, Vector2Create(1, 0)), Pi));
+    Result := Abs(FMod(Vector2Angle(FVelocity, [1, 0]), Pi));
   end;
 
 var
@@ -582,7 +582,7 @@ end;
 procedure TBall.Launch;
 begin
   if not Caught then Exit;
-  Velocity := Velocity + Vector2Scale(Joint.Paddle.Velocity, 0.4);
+  Velocity := Velocity + (Joint.Paddle.Velocity * 0.4);
   FreeAndNil(Joint);
 end;
 
@@ -597,7 +597,7 @@ begin
   end;
 
   if Slow then
-    Position -= Vector2Scale(Velocity, 1/3 * ADT);
+    Position := Position - (Velocity * (ADT * 0.333));
 end;
 
 function TBall.Clone: TBall;
@@ -640,11 +640,11 @@ begin
   if AOther is TPaddle then
   begin
     Paddle := AOther as TPaddle;
-    Normal := Vector2Create(0, -1);
+    Normal := [0, -1];
     Velocity := Vector2Rotate(
-      Vector2Scale(Normal, Vector2Length(Velocity)),
+      Normal * Vector2Length(Velocity),
       ((Position.x - Paddle.Position.x) / Paddle.Dimensions.x * 120) * DEG2RAD);
-    Velocity := Velocity + Vector2Scale(Paddle.Velocity, 0.05);
+    Velocity := Velocity + (Paddle.Velocity * 0.05);
     Exit;
   end;
 
@@ -652,23 +652,21 @@ begin
   R2 := AOther.Rectangle;
   CollisionRect := GetCollisionRec(Rectangle, AOther.Rectangle);
 
-  Normal := Vector2Zero;
   if CollisionRect.width > CollisionRect.height then
-    Normal += Vector2Create(0, 1)
+    Normal := [0, 1]
   else
-    Normal += Vector2Create(1, 0);
+    Normal := [1, 0];
 
-  Offset := Vector2Scale(
-    Vector2Normalize(Velocity),
-    Min(CollisionRect.width, CollisionRect.height));
-  Position -= Offset;
+  Offset := Vector2Normalize(Velocity) *
+    Min(CollisionRect.width, CollisionRect.height);
+  Position := Position - Offset;
 
   Velocity := Vector2Reflect(Velocity, Normal);
 end;
 
 procedure TBall.SetSpeed(const ASpeed: Single);
 begin
-  Velocity := Vector2Scale(Vector2Normalize(Velocity), ASpeed);
+  Velocity := Vector2Normalize(Velocity) * ASpeed;
 end;
 
 procedure TBall.ResetSpeed;
