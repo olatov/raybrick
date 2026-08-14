@@ -28,7 +28,8 @@ uses
   {$ifdef MSWINDOWS}
     Windows,
   {$endif}
-  Classes, SysUtils,
+  Classes, SysUtils, Types, StrUtils,
+  FPImage, FPReadJPEG, FPWriteBMP,
   GameSettings;
 
 procedure ApplyFullscreen(AFullscreen: Boolean);
@@ -72,13 +73,33 @@ end;
 function LoadImageFromResource(const AResourceName: String;
   const AFileType: String): TImage;
 var
-  Stream: TResourceStream;
+  Stream: specialize TScoped<TResourceStream>;
+  MemoryImage: specialize TScoped<TFPMemoryImage>;
+  ReaderJPEG: specialize TScoped<TFPReaderJPEG>;
+  WriterBMP: specialize TScoped<TFPWriterBMP>;
+  Buffer: specialize TScoped<TMemoryStream>;
 begin
   Stream := TResourceStream.Create(HINSTANCE, AResourceName, RT_RCDATA);
-  try
-    Result := LoadImageFromMemory(PChar(AFileType), Stream.Memory, Stream.Size);
-  finally
-    FreeAndNil(Stream);
+
+  Result := LoadImageFromMemory(
+    PChar(AFileType), Stream.Get.Memory, Stream.Get.Size);
+
+  if not (IsImageValid(Result)) and MatchText(AFileType, ['.jpg', '.jpeg']) then
+  begin
+    {
+      JPEG decoder isn't included in standard builds of recent raylib.
+      Decode with FPImage and hand the result back to raylib as BMP.
+    }
+
+    MemoryImage := TFPMemoryImage.Create(0, 0);
+    ReaderJPEG := TFPReaderJPEG.Create;
+    WriterBMP := TFPWriterBMP.Create;
+
+    Buffer := TMemoryStream.Create;
+    Stream.Get.Position := 0;
+    MemoryImage.Get.LoadFromStream(Stream.Get, ReaderJPEG.Get);
+    MemoryImage.Get.SaveToStream(Buffer.Get, WriterBMP.Get);
+    Result := LoadImageFromMemory('.bmp', Buffer.Get.Memory, Buffer.Get.Size);
   end;
 end;
 

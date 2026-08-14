@@ -104,7 +104,7 @@ begin
 
   Renderer := TTitleRenderer.Create;
   Renderer.BackgroundTexture := LoadTextureFromResource(
-    'IMAGE-BACKGROUND-TITLE', '.png');
+    'IMAGE-BACKGROUND-TITLE', '.jpg');
   Renderer.BackgroundTint := GRAY;
   Renderer.FontRounded := LoadFontFromResource('FONT-ARCADE-R', '.ttf');
   Renderer.FontInterlaced := LoadFontFromResource('FONT-ARCADE-I', '.ttf');;
@@ -253,7 +253,7 @@ begin
 
   Renderer := TGameRenderer.Create;
   Renderer.BackgroundTexture :=
-    LoadTextureFromResource('IMAGE-BACKGROUND-1', '.png');
+    LoadTextureFromResource('IMAGE-BACKGROUND-1', '.jpg');
   Renderer.BackgroundTint := ColorCreate($60, $70, $80, $ff);
   Renderer.TextureAtlas := BuildTextureAtlas;
   Renderer.FontInterlaced := LoadFontFromResource('FONT-ARCADE-I', '.ttf');
@@ -413,7 +413,7 @@ begin
     Format(
       'IMAGE-BACKGROUND-%d',
       [((State.Level - 1) mod BackgroundCount) + 1]),
-    '.png');
+    '.jpg');
 end;
 
 procedure TGamePlayScene.OnGameOver(Sender: TObject);
